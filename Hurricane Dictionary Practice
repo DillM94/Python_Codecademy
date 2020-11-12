@@ -1,0 +1,213 @@
+# names of hurricanes
+names = ['Cuba I', 'San Felipe II Okeechobee', 'Bahamas', 'Cuba II', 'CubaBrownsville', 'Tampico', 'Labor Day', 'New England', 'Carol', 'Janet', 'Carla', 'Hattie', 'Beulah', 'Camille', 'Edith', 'Anita', 'David', 'Allen', 'Gilbert', 'Hugo', 'Andrew', 'Mitch', 'Isabel', 'Ivan', 'Emily', 'Katrina', 'Rita', 'Wilma', 'Dean', 'Felix', 'Matthew', 'Irma', 'Maria', 'Michael']
+
+# months of hurricanes
+months = ['October', 'September', 'September', 'November', 'August', 'September', 'September', 'September', 'September', 'September', 'September', 'October', 'September', 'August', 'September', 'September', 'August', 'August', 'September', 'September', 'August', 'October', 'September', 'September', 'July', 'August', 'September', 'October', 'August', 'September', 'October', 'September', 'September', 'October']
+
+# years of hurricanes
+years = [1924, 1928, 1932, 1932, 1933, 1933, 1935, 1938, 1953, 1955, 1961, 1961, 1967, 1969, 1971, 1977, 1979, 1980, 1988, 1989, 1992, 1998, 2003, 2004, 2005, 2005, 2005, 2005, 2007, 2007, 2016, 2017, 2017, 2018]
+
+# maximum sustained winds (mph) of hurricanes
+max_sustained_winds = [165, 160, 160, 175, 160, 160, 185, 160, 160, 175, 175, 160, 160, 175, 160, 175, 175, 190, 185, 160, 175, 180, 165, 165, 160, 175, 180, 185, 175, 175, 165, 180, 175, 160]
+
+# areas affected by each hurricane
+areas_affected = [['Central America', 'Mexico', 'Cuba', 'Florida', 'The Bahamas'], ['Lesser Antilles', 'The Bahamas', 'United States East Coast', 'Atlantic Canada'], ['The Bahamas', 'Northeastern United States'], ['Lesser Antilles', 'Jamaica', 'Cayman Islands', 'Cuba', 'The Bahamas', 'Bermuda'], ['The Bahamas', 'Cuba', 'Florida', 'Texas', 'Tamaulipas'], ['Jamaica', 'Yucatn Peninsula'], ['The Bahamas', 'Florida', 'Georgia', 'The Carolinas', 'Virginia'], ['Southeastern United States', 'Northeastern United States', 'Southwestern Quebec'], ['Bermuda', 'New England', 'Atlantic Canada'], ['Lesser Antilles', 'Central America'], ['Texas', 'Louisiana', 'Midwestern United States'], ['Central America'], ['The Caribbean', 'Mexico', 'Texas'], ['Cuba', 'United States Gulf Coast'], ['The Caribbean', 'Central America', 'Mexico', 'United States Gulf Coast'], ['Mexico'], ['The Caribbean', 'United States East coast'], ['The Caribbean', 'Yucatn Peninsula', 'Mexico', 'South Texas'], ['Jamaica', 'Venezuela', 'Central America', 'Hispaniola', 'Mexico'], ['The Caribbean', 'United States East Coast'], ['The Bahamas', 'Florida', 'United States Gulf Coast'], ['Central America', 'Yucatn Peninsula', 'South Florida'], ['Greater Antilles', 'Bahamas', 'Eastern United States', 'Ontario'], ['The Caribbean', 'Venezuela', 'United States Gulf Coast'], ['Windward Islands', 'Jamaica', 'Mexico', 'Texas'], ['Bahamas', 'United States Gulf Coast'], ['Cuba', 'United States Gulf Coast'], ['Greater Antilles', 'Central America', 'Florida'], ['The Caribbean', 'Central America'], ['Nicaragua', 'Honduras'], ['Antilles', 'Venezuela', 'Colombia', 'United States East Coast', 'Atlantic Canada'], ['Cape Verde', 'The Caribbean', 'British Virgin Islands', 'U.S. Virgin Islands', 'Cuba', 'Florida'], ['Lesser Antilles', 'Virgin Islands', 'Puerto Rico', 'Dominican Republic', 'Turks and Caicos Islands'], ['Central America', 'United States Gulf Coast (especially Florida Panhandle)']]
+
+# damages (USD($)) of hurricanes
+damages = ['Damages not recorded', '100M', 'Damages not recorded', '40M', '27.9M', '5M', 'Damages not recorded', '306M', '2M', '65.8M', '326M', '60.3M', '208M', '1.42B', '25.4M', 'Damages not recorded', '1.54B', '1.24B', '7.1B', '10B', '26.5B', '6.2B', '5.37B', '23.3B', '1.01B', '125B', '12B', '29.4B', '1.76B', '720M', '15.1B', '64.8B', '91.6B', '25.1B']
+
+# deaths for each hurricane
+deaths = [90,4000,16,3103,179,184,408,682,5,1023,43,319,688,259,37,11,2068,269,318,107,65,19325,51,124,17,1836,125,87,45,133,603,138,3057,74]
+
+# write your update damages function here:
+def damages_converter(lst):
+  updated_list = []
+  damage_convert = {
+    'M': 1000000,
+    'B': 1000000000
+  }
+  for entries in lst:
+    if entries[-1] == 'M':
+      updated_list.append(float(entries[:-1])*damage_convert.get('M'))
+    elif entries[-1] == 'B':
+      updated_list.append(float(entries[:-1])*damage_convert.get('B'))
+    else:
+      updated_list.append(entries)
+  return updated_list
+
+damaged_update = damages_converter(damages)
+print(damaged_update)
+
+# write your construct hurricane dictionary function here:
+def compiled_lists(name, month, year, max_sustained_wind, area_affected, damage, deaths):
+  compiled_lists = {}
+  for index in range(len(name)):
+    compiled = {}
+    compiled.update(
+      {
+        'Name': name[index],
+        'Month': month[index],
+        'Year': year[index],
+        'Max Sustained Wind': max_sustained_wind[index],
+        'Areas Affected': area_affected[index],
+        'Damage': damage[index],
+        'Deaths': deaths[index]
+      }
+    )
+    compiled_lists[name[index]] = compiled
+  return compiled_lists
+
+name_key = compiled_lists(names, months, years, max_sustained_winds, areas_affected, damaged_update, deaths)
+print(name_key)
+
+# write your construct hurricane by year dictionary function here:
+def year_convert(lst):
+  year_dict = {}
+  for name, value in lst.items():
+    year = lst[name]['Year']
+    year_dict[year] = []
+
+  for key in year_dict.keys():
+    for name in lst.values():
+      if key == name['Year']:
+        year_dict[key].append(name)
+          
+  return year_dict 
+
+year_key = year_convert(name_key)
+print(year_key)
+
+# write your count affected areas function here:
+def area_count(area_list):
+  area_track = {}
+  for i in range(len(area_list)):
+    for j in range(len(area_list[i])):
+      if area_list[i][j] not in area_track:
+        area_track.update(
+          {
+            area_list[i][j]: 1
+          }
+        )
+      elif area_list[i][j] in area_track:
+        area_track[area_list[i][j]] += 1
+      
+  return area_track
+
+times_affected = area_count(areas_affected)
+print(times_affected)
+
+# write your find most affected area function here:
+def area_freq(time_list):
+  count = 0
+  location = ''
+  for loc, freq in time_list.items():
+    if freq > count:
+      count = freq
+      location = loc
+
+  return location + ' has the most hurricanes with ' + str(count) + ' having affected them.'
+
+most_freq_hurr = area_freq(times_affected)
+print(most_freq_hurr)
+
+# write your greatest number of deaths function here:
+def max_deaths(names, deaths):
+  death_count = 0
+  name = ''
+  for i in range(len(names)):
+    if deaths[i] > death_count:
+      death_count = deaths[i]
+      name = names[i]
+  return name + ':' + str(death_count)
+
+most_deaths = max_deaths(names,deaths)
+print(most_deaths)
+
+# write your catgeorize by mortality function here:
+def mortality(lst):
+  mortality_list = {
+    0: [],
+    1: [],
+    2: [],
+    3: [],
+    4: [],
+  }
+  mortality_key = {
+    0: 0,
+    1: 100,
+    2: 500,
+    3: 1000,
+    4: 10000
+  }
+  for i in range(len(lst)):
+    deads = lst[names[i]]['Deaths']
+    name = names[i]
+    use_list = []
+    if (deads > mortality_key.get(0)) and (deads <= mortality_key.get(1)):
+      use_list.append(lst.get(name))
+      mortality_list[0] += use_list
+    elif (deads > mortality_key.get(1)) and (deads <= mortality_key.get(2)):
+      use_list.append(lst.get(name))
+      mortality_list[1] += use_list
+    elif (deads > mortality_key.get(2)) and (deads <= mortality_key.get(3)):
+      use_list.append(lst.get(name))
+      mortality_list[2] += use_list
+    elif (deads > mortality_key.get(3)) and (deads <= mortality_key.get(4)):
+      use_list.append(lst.get(name))
+      mortality_list[3] += use_list
+    else:
+      use_list.append(lst.get(name))
+      mortality_list[4] += use_list
+  return mortality_list
+    
+mortality_ranks = mortality(name_key)
+print(mortality_ranks)
+
+# write your greatest damage function here:
+def most_damage(lst):
+  damage = 0
+  area = ''
+  for name, values in lst.items():
+    dollars = values.get('Damage')
+    if dollars == 'Damages not recorded': 
+      pass
+    elif dollars > damage:
+      damage = dollars
+      area = name
+  return f'{area} caused the most damage at {damage} dollars.'
+
+greatest_damage = most_damage(name_key)
+print(greatest_damage)
+
+# write your catgeorize by damage function here:
+def damage_ranked(lst):
+  damage_list = {
+    0: [],
+    1: [],
+    2: [],
+    3: [],
+    4: []
+  }
+  damage_scale = {
+    0: 0,
+    1: 100000000,
+    2: 1000000000,
+    3: 10000000000,
+    4: 50000000000
+  }
+  for names, values in lst.items():
+    if values['Damage'] != 'Damages not recorded':
+      if values['Damage'] <= damage_scale[1]:
+        damage_list[0].append(lst[names])
+      elif (values['Damage'] > damage_scale[1]) and (values['Damage'] <= damage_scale[2]):
+        damage_list[1].append(lst[names])  
+      elif (values['Damage'] > damage_scale[2]) and (values['Damage'] <= damage_scale[3]):
+        damage_list[2].append(lst[names])
+      elif (values['Damage'] > damage_scale[3]) and (values['Damage'] <= damage_scale[4]):
+        damage_list[3].append(lst[names])
+      else:
+        damage_list[4].append(lst[names])
+  return damage_list
+
+damage_ranks = damage_ranked(name_key)
+print(damage_ranks)
